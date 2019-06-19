@@ -1,0 +1,54 @@
+<div class="x-day-forecast">
+  <span>5 days weather forecast for <span class="city-name">{{weatherCardCity.getCity().name}} city</span>
+  </span>
+</div>
+
+
+<section class="forcast-weather-card" [ngSwitch]="true" *ngIf="forcastWeather">
+
+  <div class="forcast-weather-card__item" *ngFor="let weather of forcastWeather, " [class.active]="clicked === weather">
+
+    <div class="forcast-weather-card__city" (click)="showForecast(weather); clicked = weather" >
+      <!--{{weatherCardCity.getCity().name}}, {{weatherCardCity.getCity().country}}, {{weatherCardCity.getCity().coord.lat}}</div>-->
+<div class="forcast-weather-card__date-container">
+      <span>{{((weather.day.getDay() === weatherCardCity.getCurrentWeather().date.getDay())? "Today," + weather.day.toDateString().slice(0,4) : weather.day.toDateString().slice(0,3))}} </span>
+      <span>{{weather.day | date: 'dd/MM'}}</span>
+</div>
+
+      <div class="weather-card__condition-icon-container">
+        <img src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{weather.icon}}"
+             alt="Condition icon" class="condition-icon__img">
+      </div>
+
+      <div class="weather-card__condition">{{weather.condition}}</div>
+
+      <div class="min-max__container">
+
+        <div class="min__container">
+          <svg class="min-arrow__icon" viewBox="188.5 807 21 21">
+            <path d="M209.5 817.5h-21L199 828z" data-name="Min Arrow" fill="#00ff9b"></path>
+          </svg>
+          <span class="min-temperature__text">{{weather.tempMin}}</span>
+          <span class="min__text">Min</span>
+        </div>
+
+        <div class="weather-card__temp-unit">
+          <span> °{{(weatherCardCity.getTempUnit() === 'metric') ? 'C' : 'F'}}</span>
+        </div>
+
+        <div class="max__container">
+          <svg class="max-arrow__icon" viewBox="449.5 820 21 21">
+            <path d="M449.5 830.5h21L460 820z" data-name="Max Arrow" fill="red"></path>
+          </svg>
+          <span class="max-temperature__text">{{weather.tempMax}}</span>
+          <span class="max__text">Max</span>
+        </div>
+
+      </div>
+
+
+      <!--<span>{{(weather.day.getDay() === weatherCardCity.getCurrentWeather().date.getDay())? "Today, " + weather.day.toDateString() : weather.day.toDateString()}} </span>-->
+
+    </div>
+  </div>
+</section>

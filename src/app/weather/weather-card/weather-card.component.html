@@ -1,0 +1,179 @@
+
+
+<div class="search-city row columns">
+  FIND YOUR CITY   <input class="search-city__input" type="text" [(ngModel)]="city" (keyup.enter)="searchCityWeatherCard()">
+</div>
+
+<section class="weather-container" [ngSwitch]="true" *ngIf="currentWeather" >
+
+  <div class="weather-card__item">
+      <div class="weather-card__city">
+        <span>Weather for </span><br>
+        <p class="weather-card_city-name">{{weatherCardCity.getCity().name}}, {{weatherCardCity.getCity().country}}</p>
+      </div>
+
+    <div class="weather-card_container">
+      <div class="weather-card__condition-icon-container">
+        
+          <img src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{currentWeather.icon}}" alt="Condition icon">
+        
+      </div>
+
+      <div class="weather-card__temp-condition">
+        <div class="weather-card__temp">
+          <span class="weather-card__temp-value" >{{currentWeather.temp}}</span>
+          <span class="weather-card__temp-unit">°{{(weatherCardCity.getTempUnit() === 'metric') ? 'C' : 'F'}}</span>
+        </div>
+      
+        <div class="weather-card__condition"><p>{{currentWeather.description}}</p></div>
+      </div>
+
+      <div class="weather-card__wind">
+        <div class="weather-card__wind-rotation">
+          <img class="wind" [ngStyle]="{'transform':'rotate('+weatherCardCity.getCurrentWeather().windDeg+'deg)'}" src="https://ssl.gstatic.com/m/images/weather/wind_unselected.svg" alt="{{weatherCardCity.getCurrentWeather().windDeg}}°" style="" aria-hidden="true" data-atf="0">
+        </div>
+        <div class="weather-card__wind-speed">
+            <p >wind: {{weatherCardCity.getCurrentWeather().windSpeed}} m/s </p>
+          </div>
+      </div>
+
+      <div class="weather-card_infoDaylight">
+        <div>pressure <span>{{currentWeather.pressure}} hPa</span></div>
+        <div>humidity <span>{{currentWeather.humidity}} %</span></div>
+        <div>sunrise <span>{{currentWeather.sunrise | date:'HH:mm'}}</span></div>
+        <div>sunset <span>{{currentWeather.sunset | date:'HH:mm'}}</span></div>
+      </div>
+
+      <div class="weather-card__item-data">
+        <span>Now, {{currentWeather.date.toDateString().slice(0, 3)}} <br> <span>{{currentWeather.date.toDateString().slice(4)}}</span></span>
+      </div>
+    </div>
+
+    <div *ngIf="isAlreadyAdd(weatherCardCity) then alreadyAdd else notAdd" ></div>
+
+    <div class="btn btn-outline-warning btn-show-forecast" (click)="showforcast = !showforcast">
+      <span class="tap btn btn-outline-primary ">TAP TO SEE FORECAST</span>
+    </div>
+
+  </div>
+
+  <ng-template #notAdd>
+    <div class="btn btn-outline-primary btn-add" (click)="addCityToFav(weatherCardCity)">
+      <span class="glyphicon glyphicon-plus-sign add"></span>
+      <br>
+      <span>TAP TO ADD</span>
+    </div>
+  </ng-template>
+
+  <ng-template #alreadyAdd>
+    <div class="btn btn-outline-success btn-add">
+      <span class="glyphicon glyphicon-ok-sign add"></span>
+      <br>
+      <span>ADDED</span>
+    </div>
+  </ng-template>
+
+  <!--<div class="forecast-weather" *ngIf="dailyForecast">-->
+      <!--<div class="forecast-weather__container">-->
+          <!--&lt;!&ndash; <span>Weather for </span>-->
+        <!--{{weatherCardCity.getCity().name}}, {{weatherCardCity.getCity().country}} &ndash;&gt;-->
+      <!--&lt;!&ndash; </div> &ndash;&gt;-->
+
+        <!--&lt;!&ndash; <div class="forecast-weather__condition-icon-container">-->
+          <!--<img class="forecast-weather__condition-icon" src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{dailyForecast.icon}}" alt="Condition icon">-->
+        <!--</div>-->
+    <!---->
+        <!--<div class="forecast-weather__condition">Condition: {{dailyForecast.condition}}</div>-->
+    <!---->
+        <!--<div class="forecast-weather__temp">Temp: {{dailyForecast.temp}}-->
+          <!--<span class="forecast-weather__temp-unit">°{{(weatherCardCity.getTempUnit() === 'metric') ? 'C' : 'F'}}</span>-->
+        <!--</div>-->
+    <!---->
+        <!--<div class="forecast-weather__data">-->
+          <!--<span>{{(dailyForecast.day.getDay() === weatherCardCity.getCurrentWeather().date.getDay())? "Today, " + dailyForecast.day.toDateString() : dailyForecast.day.toDateString()}}</span>-->
+        <!--</div> &ndash;&gt;-->
+
+          <!--<div class="lSide">-->
+              <!--<div class="calendBlock">-->
+                  <!--<p class="infoDayweek">{{dailyForecast[0].date.toDateString().slice(0, 3)}}</p>-->
+                  <!--<div class="weatherIcoCurrent" title="{{dailyForecast[0].condition}}">-->
+                      <!--<img class="icon" src="https://openweathermap.org/img/w/{{dailyForecast[(dailyForecast.length === 1)? 0 : (dailyForecast.length / 2 | number: '1.0-0')].icon}}" alt="Condition icon">-->
+                  <!--</div>-->
+                  <!--<p class="infoDate">{{dailyForecast[0].date | date:'dd'}}</p>-->
+                  <!--<p class="infoMonth">{{dailyForecast[0].date | date:'MMM'}}</p>-->
+              <!--</div>-->
+          <!--</div>-->
+
+          <!--<div class="rSide">-->
+
+            <!--<div class="titles">-->
+              <!--<p>Time</p>-->
+              <!--<p>Condition</p>-->
+              <!--<p>icon</p>-->
+              <!--<p>Temp, °C</p>-->
+              <!--<p>Pressure, hPa</p>-->
+              <!--<p>humidity, %</p>-->
+              <!--<p>Wind, м/sec</p>-->
+            <!--</div>-->
+
+              <!--<table class="weatherDetails">-->
+                  <!--<thead>-->
+                    <!--<tr>-->
+                        <!--<td class="bR"></td>-->
+                        <!--<td class="" colspan="2" [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR show' : 'display-none'" *ngFor = "let item of dailyForecast; let i = index" >-->
+                            <!--<p class="" *ngIf="item.date.getHours() > 0 && item.date.getHours() <= 6">night</p>-->
+                            <!--<p class="" *ngIf="item.date.getHours() > 6 && item.date.getHours() <= 12">morning</p>-->
+                            <!--<p class="" *ngIf="item.date.getHours() > 12 && item.date.getHours() <= 18">afternoon</p>-->
+                            <!--<p class="" *ngIf="item.date.getHours() > 18 && item.date.getHours() <=24">evening</p>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                  <!--</thead>-->
+                  <!--<tbody >-->
+                    <!--<tr class="gray time">-->
+                        <!--<td class="titles bR">Time</td>-->
+                        <!--<td class="p1 " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index" >{{item.date | date: 'HH:mm'}}</td>-->
+
+                    <!--</tr>-->
+                    <!--<tr class="img weatherIcoS">-->
+                        <!--<td class="titles bR">Condition</td >-->
+                        <!--<td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index" >-->
+                            <!--<div class="weatherIco" title="{{item.condition}}">-->
+                              <!--<img class="weatherImg" src="https://openweathermap.org/img/w/{{item.icon}}" alt="Condition icon">-->
+                            <!--</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                    <!--<tr class="temperature">-->
+                        <!--<td class="titles bR">Temp, °C</td>-->
+                        <!--<td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">{{item.temp}}</td>-->
+                    <!--</tr>-->
+                                  <!--&lt;!&ndash;<tr class="temperatureSens">&ndash;&gt;-->
+                                                      <!--&lt;!&ndash;<td class="p1  ">-12°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p2 bR ">-14°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p3  ">-16°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p4 bR ">-16°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p5  ">-15°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p6 bR ">-15°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p7  ">-15°</td>&ndash;&gt;-->
+                                                              <!--&lt;!&ndash;<td class="p8  ">-17°</td>&ndash;&gt;-->
+                                                  <!--&lt;!&ndash;</tr>&ndash;&gt;-->
+                    <!--<tr class="gray" >-->
+                        <!--<td class="titles bR">Pressure, hPa</td>-->
+                        <!--<td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">{{item.pressure}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr>-->
+                        <!--<td class="titles bR">humidity, %</td>-->
+                        <!--<td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">{{item.humidity}}</td>-->
+                    <!--</tr>-->
+                    <!--<tr class="gray">-->
+                        <!--<td class="titles bR">Wind, м/sec</td>-->
+                        <!--<td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">-->
+                            <!--<div data-tooltip="Северо-восточный, 3.7 м/с " class="wind">{{item.windSpeed}}</div>-->
+                        <!--</td>-->
+                    <!--</tr>-->
+                  <!--</tbody>-->
+              <!--</table>-->
+
+            <app-weather-details *ngIf="showforcast" [isShowBackgroundImage]="true" [dailyForecast]="dailyForecast"></app-weather-details>
+
+<app-forcast-weather-card *ngIf="showforcast" [weatherCardCity] = "weatherCardCity" (dailyForecast)="receiveDailyForecastFromChild($event)"></app-forcast-weather-card>
+</section>

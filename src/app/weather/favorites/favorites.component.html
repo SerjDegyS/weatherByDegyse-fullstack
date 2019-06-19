@@ -1,0 +1,84 @@
+<p class="message">
+  {{message}}
+</p>
+
+<section id="favorite-container" >
+  <div id="favorite-container--item" *ngFor="let cityCard of favsCitiesCards, let item = index" >
+    <div class="widget-left widget-left--blue">
+      <div class="widget-left-menu widget-left-menu--blue">
+        <div class="widget-left-menu__layout">
+          <h2 class="widget-left-menu__header">{{cityCard.getCity().name}}, {{cityCard.getCity().country}}</h2>
+            <span href="https://openweathermap.org/" target="_blank" class="widget-left-menu__link">WeatherByDegys</span>
+          <div class="btn btn-outline-danger btn-remove" (click)="removeCity(cityCard, item)">
+            <span class="glyphicon glyphicon-remove-circle remove"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="widget-left__body">
+        <div class="weather-left-card">
+          <div class="weather-left-card__row1"><img src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{cityCard.getCurrentWeather().icon}}" width="128" height="128" alt="Weather in London, GB" class="weather-left-card__img">
+            <div class="weather-left-card__col">
+              <p class="weather-left-card__number">{{cityCard.getCurrentWeather().temp}}<span class="weather-left-card__degree">°C</span></p><span class="weather-left-card__rising" *ngIf="cityCard.getForcastWeather()">{{stateOfTemperature(cityCard)}}</span>
+            </div>
+          </div>
+          <div class="weather-left-card__row2">
+            <p class="weather-left-card__means">{{cityCard.getCurrentWeather().condition}}</p>
+            <div class="weather-left-card__row3">
+              <div class="infoDaylight">
+                <div>Sunrise <span>{{cityCard.getCurrentWeather().sunrise | date:'HH:mm'}}</span></div>
+                <div>Sunset <span>{{cityCard.getCurrentWeather().sunset | date:'HH:mm'}}</span></div>
+              </div>
+
+                <p class="weather-left-card__wind">Wind: {{cityCard.getCurrentWeather().windSpeed}} m/s
+                  <img class="wind" [ngStyle]="{'transform':'rotate('+cityCard.getCurrentWeather().windDeg+'deg)'}" src="https://ssl.gstatic.com/m/images/weather/wind_unselected.svg" alt="{{cityCard.getCurrentWeather().windDeg}}°" style="" aria-hidden="true" data-atf="0">
+                </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="widget-left__calendar" >
+          <ul class="calendar" *ngIf="cityCard.getForcastWeather()">
+            <li class="calendar__item" *ngFor="let dailyForecast of cityCard.getForcastWeather()" >
+              <!--<div class="calendar__item__container" >-->
+                {{((dailyForecast.day.getDay() === cityCard.getCurrentWeather().date.getDay())? "Today, " + dailyForecast.day.toDateString().slice(0,4) : dailyForecast.day.toDateString().slice(0,3))}}
+                <br>{{dailyForecast.day | date: 'dd MMM'}}<br>
+                <img src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{dailyForecast.icon}}" width="45" height="45" alt="Today">
+
+                <div class="min-max__container">
+
+                  <div class="max__container">
+                    <span class="max-temperature__text">{{dailyForecast.tempMax}}</span>
+                    <svg class="max-arrow__icon" viewBox="449.5 820 30 30">
+                      <path d="M449.5 830.5h21L460 820z" data-name="Max Arrow" fill="red"></path>
+                    </svg>
+                    <!--<span class="max__text">Max</span>-->
+                  </div>
+
+                  <!--<div class="weather-card__temp-unit">-->
+                  <!--<span> °{{(weatherCardCity.getTempUnit() === 'metric') ? 'C' : 'F'}}</span>-->
+                  <!--</div>-->
+
+                  <div class="min__container">
+                    <svg class="min-arrow__icon" viewBox="188.5 807 30 30">
+                      <path d="M209.5 817.5h-21L199 828z" data-name="Min Arrow" fill="#00ff9b"></path>
+                    </svg>
+                    <span class="min-temperature__text">{{dailyForecast.tempMin}}</span>
+                  </div>
+                </div>
+            </li>
+          </ul>
+
+        </div>
+
+      </div>
+      <div class="weather-forecast__container">
+        <app-favorite-forecast [dailyForecast]="cityCard.getForcastWeather()" ></app-favorite-forecast>
+      </div>
+    </div>
+
+  </div>
+
+</section>
+
+

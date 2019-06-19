@@ -1,0 +1,77 @@
+<div class="weather-details" *ngIf="dailyForecast" [ngClass]="{background_image__inherit: !isShowBackgroundImage}">
+  <div class="forecast-weather__container">
+
+
+    <div class="lSide">
+      <div class="calendBlock">
+        <p class="infoDayweek">{{dailyForecast[0].date.toDateString().slice(0, 3)}}</p>
+        <div class="weatherIcoCurrent" title="{{dailyForecast[0].condition}}">
+          <img class="icon" src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{dailyForecast[(dailyForecast.length === 1)? 0 : (dailyForecast.length / 2 | number: '1.0-0')].icon}}" alt="Condition icon">
+        </div>
+        <p class="infoDate">{{dailyForecast[0].date | date:'dd'}}</p>
+        <p class="infoMonth">{{dailyForecast[0].date | date:'MMM'}}</p>
+      </div>
+    </div>
+
+    <div class="rSide">
+
+      <table class="weatherDetails">
+        <thead>
+        <tr>
+          <td class="bR"></td>
+          <td class="" colspan="2" [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR show' : 'display-none'" *ngFor = "let item of dailyForecast; let i = index" >
+            <p class="time" *ngIf="item.date.getHours() > 0 && item.date.getHours() <= 6">night</p>
+            <p class="time" *ngIf="item.date.getHours() > 6 && item.date.getHours() <= 12">morning</p>
+            <p class="time" *ngIf="item.date.getHours() > 12 && item.date.getHours() <= 18">afternoon</p>
+            <p class="time" *ngIf="item.date.getHours() > 18 && item.date.getHours() <=24">evening</p>
+          </td>
+        </tr>
+        </thead>
+        <tbody >
+        <tr class="gray time">
+          <td class="titles bR">Time</td>
+          <td class="p1 " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index" >{{item.date | date: 'HH:mm'}}</td>
+
+        </tr>
+        <tr class="img weatherIcoS">
+          <td class="titles bR">Condition</td >
+          <td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index" >
+            <div class="weatherIco" title="{{item.condition}}">
+              <img class="weatherImg" src="https://openweathermap.org/themes/openweathermap/assets/vendor/owm/img/widgets/{{item.icon}}" alt="Condition icon">
+            </div>
+          </td>
+        </tr>
+        <tr class="temperature">
+          <td class="titles bR">Temp, °C</td>
+          <td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">{{item.temp}}</td>
+        </tr>
+        <!--<tr class="temperatureSens">-->
+        <!--<td class="p1  ">-12°</td>-->
+        <!--<td class="p2 bR ">-14°</td>-->
+        <!--<td class="p3  ">-16°</td>-->
+        <!--<td class="p4 bR ">-16°</td>-->
+        <!--<td class="p5  ">-15°</td>-->
+        <!--<td class="p6 bR ">-15°</td>-->
+        <!--<td class="p7  ">-15°</td>-->
+        <!--<td class="p8  ">-17°</td>-->
+        <!--</tr>-->
+        <tr class="gray" >
+          <td class="titles bR">Pressure, hPa</td>
+          <td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">{{item.pressure}}</td>
+        </tr>
+        <tr>
+          <td class="titles bR">humidity, %</td>
+          <td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">{{item.humidity}}</td>
+        </tr>
+        <tr class="gray">
+          <td class="titles bR">Wind, м/sec</td>
+          <td class="p1  " [className]="((i+1) % 2 === 0 && i !== dailyForecast.length) ? 'bR' : ''" *ngFor = "let item of dailyForecast; let i = index">
+            <div data-tooltip="Северо-восточный, 3.7 м/с " class="wind">{{item.windSpeed}}</div>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,34 @@
+.glyphicon{
+  font-size: 20px;
+  margin: 7px;
+}
+
+.favorite-forecast__container{
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  right: 20%;
+}
+
+.next_left{
+  float: left;
+  cursor: pointer;
+  margin-left: 5px;
+}
+
+.next_right{
+  float: right;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.see-forecast__click{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 40px;
+}
+
+.tap-to-see{}

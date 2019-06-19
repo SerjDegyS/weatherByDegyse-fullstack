@@ -1,0 +1,151 @@
+
+// forecast weather
+.weather-details{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  // margin: 20px;
+  padding: 5px;
+  width: 100%;
+  //height: 20em;
+  font-family: Roboto,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 1.428571429;
+  color: #333333;
+  background-image: linear-gradient(to top left,#feb020,#ffd05c);
+  border-radius: 6px;
+  box-shadow: 10px -2px 20px 2px rgba(0,0,0,.3);
+  border-bottom: 2px solid #ff4f98;
+  background: linear-gradient(110deg, #fdcd3b 60%, #ffed4b 60%);
+}
+
+.background_image__inherit{
+  background-image: inherit;
+}
+
+// coteiner for forecast
+
+.forecast-weather__container{
+  display: flex;
+  position: relative;
+  //justify-content: center;
+  align-items: center;
+  justify-content: space-between;
+  //width: 100%;
+  //background-color: #feb020;
+}
+
+//.wMain{
+//  display: flex;
+//  justify-content: space-around;
+//}
+
+.lSide {
+  position: relative;
+  display: block;
+  font-size: 1.5em;
+  // width: 20%;
+  float: left;
+  margin-right: 4px;
+}
+
+.weatherIcoCurrent img{
+  width: 3em;
+}
+
+
+.rSide{
+  display: flex;
+  flex-direction: row;
+  font-size: 15px;
+}
+
+.weatherDetails {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+.weatherDetails tr.temperature td {
+  font-size: 15px;
+}
+.weatherDetails td.bR{
+  border-right: #dfdfdf 1px solid;
+}
+.weatherDetails td {
+  font-size: .6em;
+  height: 35px;
+  width: 50px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.calendBlock {
+  width: 100px;
+  text-align: center;
+  padding: 0px 0 0 0px;
+  //height: 166px;
+}
+
+.infoDaylight {
+  display: block;
+  width: 100px;
+  border: 1px solid #dfdfdf;
+  border-radius: 3px;
+  color: #777;
+  font-size: 11px;
+  // height: 22px;
+  line-height: 22px;
+  margin: 0 0 0 8px;
+  text-align: center;
+}
+
+.titles {
+  font-size: 11px;
+  color: #777;
+  //top: 75px;
+  //left: 120px;
+  margin-top: 45px;
+  padding: .3em;
+  // width: 130px;
+  //position: absolute;
+}
+
+.titles p {
+  padding: 0px 0;
+  text-align: right;
+
+}
+
+.weatherImg{
+  width: 80%;
+}
+
+.display-none{
+  display: none;
+}
+
+@media (max-width: 480px) {
+
+  .calendBlock{
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    align-items: center;
+  }
+
+  .infoDate{
+    margin: 0 5px 10px 5px;
+  }
+
+
+
+  .forecast-weather__container{
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    //justify-content: space-between;
+  }
+}

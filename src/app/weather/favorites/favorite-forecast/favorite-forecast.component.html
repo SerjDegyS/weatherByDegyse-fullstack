@@ -1,0 +1,22 @@
+
+<button class="btn  btn btn-warning see-forecast__click" (click)="showForecast()" >
+  <div class="tap-to-see">TAP TO SEE FORECAST </div><span [ngClass]="(isShowedForecast) ? 'glyphicon glyphicon-chevron-up' : 'glyphicon glyphicon-chevron-down'"></span>
+</button>
+
+<div class="favorite-forecast__container" *ngIf="isShowedForecast">
+  <div class="next_left" (click)="showWeatherItemLeft()">
+    <p><span class="glyphicon glyphicon-chevron-left"></span></p>
+  </div>
+
+  <div class="weather-details">
+    <app-weather-details [isShowBackgroundImage]="false" [dailyForecast]="currdailyForecast" ></app-weather-details>
+  </div>
+
+  <div class="next_right" (click)="showWeatherItemRight()">
+    <p><span class="glyphicon glyphicon-chevron-right"></span></p>
+  </div>
+</div>
+
+
+
+
